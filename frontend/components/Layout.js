@@ -1,9 +1,10 @@
 // do not use <React.Fragment></React.Fragment>
+import Header from './Header'
 
 const Layout = ({children}) => {
     return (
         <>
-            <p>header</p>
+            <Header/>
                 {children}
             <p>footer</p>
         </>
