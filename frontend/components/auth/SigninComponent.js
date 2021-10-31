@@ -1,6 +1,6 @@
 import Router from "next/router";
 import { useState } from "react";
-import { signin } from "../../actions/auth";
+import { signin, authenticate } from "../../actions/auth";
 
 const SigninComponent = () => {
   const [values, setValues] = useState({
@@ -25,7 +25,9 @@ const SigninComponent = () => {
         // save user token to cookie
         // save user info to localstorage
         // authenticate user
-        Router.push(`/`)
+        authenticate(data, () => {
+            Router.push(`/`);
+        })
       }
     });
   };
