@@ -28,33 +28,33 @@ const Header = () => {
     <div>
       <Navbar color="dark" container="md" dark expand="md">
         <Link href="/">
-        <NavbarBrand className="font-weight-bold">{APP_NAME}</NavbarBrand>
+        <NavbarBrand className="fw-bolder">{APP_NAME}</NavbarBrand>
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
             <NavItem>
                 <Link href="/signin">
-                <NavLink>
+                <NavLink className="fw-lighter">
                   Sign In
                  </NavLink>
                   </Link>
             </NavItem>
             <NavItem>
               <Link href="/signup">
-              <NavLink>
+              <NavLink className="fw-lighter">
                 Sign Up
               </NavLink>
               </Link>
             </NavItem>
             <UncontrolledDropdown inNavbar nav>
-              <DropdownToggle caret nav>
+              <DropdownToggle caret nav className="fw-lighter">
                 Socials
               </DropdownToggle>
               <DropdownMenu end>
-                <DropdownItem>Github</DropdownItem>
-                <DropdownItem>LinkedIn</DropdownItem>
-                <DropdownItem>Dev.to</DropdownItem>
+                <DropdownItem className="fw-lighter">Github</DropdownItem>
+                <DropdownItem className="fw-lighter">LinkedIn</DropdownItem>
+                <DropdownItem className="fw-lighter">Dev.to</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

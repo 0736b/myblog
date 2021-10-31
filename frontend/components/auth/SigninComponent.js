@@ -1,9 +1,9 @@
+import Router from "next/router";
 import { useState } from "react";
-import { signup } from "../../actions/auth";
+import { signin } from "../../actions/auth";
 
-const SignupComponent = () => {
+const SigninComponent = () => {
   const [values, setValues] = useState({
-    name: "",
     email: "",
     password: "",
     error: "",
@@ -12,25 +12,20 @@ const SignupComponent = () => {
     showForm: true,
   });
 
-  const { name, email, password, error, loading, message, showForm } = values;
+  const {email, password, error, loading, message, showForm } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setValues({ ...values, loading: true, error: false });
-    const user = { name, email, password };
-    signup(user).then((data) => {
+    const user = {email, password };
+    signin(user).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
-        setValues({
-          ...values,
-          name: "",
-          email: "",
-          password: "",
-          loading: false,
-          message: data.message,
-          showForm: false,
-        });
+        // save user token to cookie
+        // save user info to localstorage
+        // authenticate user
+        Router.push(`/`)
       }
     });
   };
@@ -46,19 +41,9 @@ const SignupComponent = () => {
   const showMessage = () =>
     message ? <div className="alert alert-info">{message}</div> : "";
 
-  const signupForm = () => {
+  const signinForm = () => {
     return (
       <form onSubmit={handleSubmit}>
-        <div className="form-group pb-2">
-          <input
-            value={name}
-            onChange={handleChange("name")}
-            type="text"
-            className="form-control"
-            placeholder="Type your name"
-          ></input>
-        </div>
-
         <div className="form-group pb-2">
           <input
             value={email}
@@ -91,9 +76,9 @@ const SignupComponent = () => {
       {showError()}
       {showLoading()}
       {showMessage()}
-      {showForm && signupForm()}
+      {showForm && signinForm()}
     </>
   );
 };
 
-export default SignupComponent;
+export default SigninComponent;
