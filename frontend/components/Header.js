@@ -51,7 +51,7 @@ const Header = () => {
               <DropdownToggle caret nav>
                 Socials
               </DropdownToggle>
-              <DropdownMenu right>
+              <DropdownMenu end>
                 <DropdownItem>Github</DropdownItem>
                 <DropdownItem>LinkedIn</DropdownItem>
                 <DropdownItem>Dev.to</DropdownItem>
