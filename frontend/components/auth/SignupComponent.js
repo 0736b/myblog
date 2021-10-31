@@ -1,7 +1,14 @@
 import { useState } from "react";
-import { signup } from "../../actions/auth";
+import Router from "next/router";
+import { signup, isAuth } from "../../actions/auth";
 
 const SignupComponent = () => {
+
+    if(isAuth()){
+        Router.push(`/`);
+    }
+
+
   const [values, setValues] = useState({
     name: "",
     email: "",
