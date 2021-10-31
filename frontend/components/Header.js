@@ -1,7 +1,9 @@
 import React from "react";
+import Router from "next/router";
 import Link from 'next/link';
 import {APP_NAME} from "../config";
 import { useState } from "react";
+import {signout, isAuth} from '../actions/auth';
 import {
   Navbar,
   NavbarBrand,
@@ -32,23 +34,35 @@ const Header = () => {
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="me-auto" navbar>
-            <NavItem>
+          <Nav navbar>
+            {!isAuth() && <>
+              <NavItem>
                 <Link href="/signin">
-                <NavLink className="fw-lighter">
+                <NavLink style={{cursor: 'pointer'}} className="fw-lighter">
                   Sign In
                  </NavLink>
                   </Link>
             </NavItem>
             <NavItem>
               <Link href="/signup">
-              <NavLink className="fw-lighter">
+              <NavLink style={{cursor: 'pointer'}} className="fw-lighter">
                 Sign Up
               </NavLink>
               </Link>
             </NavItem>
+             </>}
+
+            {/* Check user login */}
+            {isAuth() && (
+                          <NavItem>
+                          <NavLink style={{cursor: 'pointer'}} onClick={() => signout(() => Router.replace(`/signin`))} className="fw-lighter">
+                            Signout
+                          </NavLink>
+                        </NavItem>
+            )}
+
             <UncontrolledDropdown inNavbar nav>
-              <DropdownToggle caret nav className="fw-lighter">
+              <DropdownToggle nav className="fw-lighter">
                 Socials
               </DropdownToggle>
               <DropdownMenu end>

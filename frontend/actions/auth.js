@@ -1,6 +1,6 @@
 import fetch from "isomorphic-fetch";
 import { API } from "../config";
-import cookie from 'js-cookie';
+import cookie from "js-cookie";
 
 export const signup = (user) => {
   return fetch(`${API}/signup`, {
@@ -32,6 +32,19 @@ export const signin = (user) => {
     .catch((err) => console.log(err));
 };
 
+export const signout = (next) => {
+  removeCookie("token");
+  removeLocalStorage("user");
+  next();
+  return fetch(`${API}/signout`, {
+    method: "GET",
+  })
+    .then((response) => {
+      console.log("signout success");
+    })
+    .catch((err) => console.log(err));
+};
+
 // set cookie
 export const setCookie = (key, value) => {
   if (process.browser) {
@@ -53,39 +66,39 @@ export const removeCookie = (key) => {
 // get cookie
 export const getCookie = (key) => {
   if (process.browser) {
-    cookie.get(key);
+    return cookie.get(key);
   }
 };
 
 // localstorage
 export const setLocalStorage = (key, value) => {
-    if(process.browser) {
-        localStorage.setItem(key, JSON.stringify(value));
-    }
+  if (process.browser) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
 };
 
 export const removeLocalStorage = (key) => {
-    if(process.browser) {
-        localStorage.removeItem(key);
-    }
+  if (process.browser) {
+    localStorage.removeItem(key);
+  }
 };
 
 // authenticate user by pass data to cookie and localstorage
 export const authenticate = (data, next) => {
-    setCookie('token', data.token);
-    setLocalStorage('user', data.user);
-    next();
-}
+  setCookie("token", data.token);
+  setLocalStorage("user", data.user);
+  next();
+};
 
 export const isAuth = () => {
-    if(process.browser) {
-        const cookieChecked = getCookie('token');
-        if(cookieChecked) {
-            if(localStorage.getItem('user')) {
-                return JSON.parse(localStorage.getItem('user'))
-            } else {
-                return false;
-            }
-        }
+  if (process.browser) {
+    const cookieChecked = getCookie("token");
+    if (cookieChecked) {
+      if (localStorage.getItem("user")) {
+        return JSON.parse(localStorage.getItem("user"));
+      } else {
+        return false;
+      }
     }
-}
+  }
+};

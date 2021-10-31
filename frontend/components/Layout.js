@@ -6,7 +6,7 @@ const Layout = ({children}) => {
         <>
             <div className="container-md bg-secondary bg-gradient">
             <Header/>
-            <div>
+            <div className="container-sm">
             {children}
             </div> 
             <p className="text-center mt-4 bg-black">@2021</p>
