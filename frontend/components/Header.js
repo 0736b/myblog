@@ -1,4 +1,5 @@
 import React from "react";
+import Link from 'next/link';
 import {APP_NAME} from "../config";
 import { useState } from "react";
 import {
@@ -25,18 +26,26 @@ const Header = () => {
 
   return (
     <div>
-      <Navbar color="dark" container="md" dark expand="md" fixed="top">
-        <NavbarBrand href="/">{APP_NAME}</NavbarBrand>
+      <Navbar color="dark" container="md" dark expand="md">
+        <Link href="/">
+        <NavbarBrand className="font-weight-bold">{APP_NAME}</NavbarBrand>
+        </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
             <NavItem>
-              <NavLink href="/">Home</NavLink>
+                <Link href="/signin">
+                <NavLink>
+                  Sign In
+                 </NavLink>
+                  </Link>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/0736b">
-                Portfolio
+              <Link href="/signup">
+              <NavLink>
+                Sign Up
               </NavLink>
+              </Link>
             </NavItem>
             <UncontrolledDropdown inNavbar nav>
               <DropdownToggle caret nav>
