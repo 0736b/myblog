@@ -1,4 +1,4 @@
-// do not use <React.Fragment></React.Fragment>
+// do not use <React.Fragmen> just use <> </>
 import Header from './Header'
 
 const Layout = ({children}) => {
