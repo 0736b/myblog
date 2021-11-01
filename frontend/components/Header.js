@@ -1,6 +1,7 @@
 import React from "react";
 import Router from "next/router";
 import Link from "next/link";
+import NProgress from "nprogress"; // Progression loading bar
 import { APP_NAME } from "../config";
 import { useState } from "react";
 import { signout, isAuth } from "../actions/auth";
@@ -18,6 +19,14 @@ import {
   DropdownItem,
   DropdownMenu,
 } from "reactstrap";
+
+import '.././node_modules/nprogress/nprogress.css';
+
+// NProgress
+Router.onRouteChangeStart = url => NProgress.start();
+Router.onRouteChangeComplete = url => NProgress.done();
+Router.onRouteChangeError = url => NProgress.done();
+
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
