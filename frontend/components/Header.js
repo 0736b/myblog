@@ -1,9 +1,9 @@
 import React from "react";
 import Router from "next/router";
-import Link from 'next/link';
-import {APP_NAME} from "../config";
+import Link from "next/link";
+import { APP_NAME } from "../config";
 import { useState } from "react";
-import {signout, isAuth} from '../actions/auth';
+import { signout, isAuth } from "../actions/auth";
 import {
   Navbar,
   NavbarBrand,
@@ -30,35 +30,60 @@ const Header = () => {
     <div>
       <Navbar color="dark" container="md" dark expand="md">
         <Link href="/">
-        <NavbarBrand className="fw-bolder">{APP_NAME}</NavbarBrand>
+          <NavbarBrand className="fw-bolder">{APP_NAME}</NavbarBrand>
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav navbar>
-            {!isAuth() && <>
-              <NavItem>
-                <Link href="/signin">
-                <NavLink style={{cursor: 'pointer'}} className="fw-lighter">
-                  Sign In
-                 </NavLink>
+            {!isAuth() && (
+              <>
+                <NavItem>
+                  <Link href="/signin">
+                    <NavLink
+                      style={{ cursor: "pointer" }}
+                      className="fw-lighter"
+                    >
+                      Sign In
+                    </NavLink>
                   </Link>
-            </NavItem>
-            <NavItem>
-              <Link href="/signup">
-              <NavLink style={{cursor: 'pointer'}} className="fw-lighter">
-                Sign Up
-              </NavLink>
-              </Link>
-            </NavItem>
-             </>}
+                </NavItem>
+                <NavItem>
+                  <Link href="/signup">
+                    <NavLink
+                      style={{ cursor: "pointer" }}
+                      className="fw-lighter"
+                    >
+                      Sign Up
+                    </NavLink>
+                  </Link>
+                </NavItem>
+              </>
+            )}
 
-            {/* Check user login */}
-            {isAuth() && (
-                          <NavItem>
-                          <NavLink style={{cursor: 'pointer'}} onClick={() => signout(() => Router.replace(`/signin`))} className="fw-lighter">
-                            Signout
-                          </NavLink>
-                        </NavItem>
+            {/* Admin Dashboard */}
+            {isAuth() && isAuth().role === 1 && (
+              <NavItem>
+                <NavLink
+                  style={{ cursor: "pointer" }}
+                  onClick={() => Router.replace(`/admin`)}
+                  className="fw-lighter"
+                >
+                  {`${isAuth().name}'s Dashboard`}
+                </NavLink>
+              </NavItem>
+            )}
+
+            {/* User Dashboard */}
+            {isAuth() && isAuth().role !== 1 && (
+              <NavItem>
+                <NavLink
+                  style={{ cursor: "pointer" }}
+                  onClick={() => Router.replace(`/user`)}
+                  className="fw-lighter"
+                >
+                  {`${isAuth().name}'s Dashboard`}
+                </NavLink>
+              </NavItem>
             )}
 
             <UncontrolledDropdown inNavbar nav>
@@ -71,6 +96,20 @@ const Header = () => {
                 <DropdownItem className="fw-lighter">Dev.to</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
+
+            {/* Check user login */}
+            {isAuth() && (
+              <NavItem>
+                <NavLink
+                  style={{ cursor: "pointer" }}
+                  onClick={() => signout(() => Router.replace(`/signin`))}
+                  className="fw-lighter"
+                >
+                  Signout
+                </NavLink>
+              </NavItem>
+            )}
+            
           </Nav>
         </Collapse>
       </Navbar>

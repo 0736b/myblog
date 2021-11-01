@@ -1,0 +1,25 @@
+const Category = require('../models/category');
+const slugify = require('slugify');
+// slugify is doing space to dash like | new arrival to new-arrival
+const { errorHandler} = require('../helpers/dbErrorHandler');
+
+
+exports.create = (req, res) => {
+
+    const {name} = req.body;
+    let slug = slugify(name).toLowerCase();
+
+    let category = new Category({name, slug});
+
+    category.save((err, data) => {
+
+        if(err){
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+
+        res.json(data);
+
+    });
+}
