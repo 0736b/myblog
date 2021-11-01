@@ -9,9 +9,9 @@ exports.create = (req, res) => {
     const {name} = req.body;
     let slug = slugify(name).toLowerCase();
 
-    let Tag = new Tag({name, slug});
+    let tag = new Tag({name, slug});
 
-    Tag.save((err, data) => {
+    tag.save((err, data) => {
 
         if(err){
             return res.status(400).json({
@@ -42,13 +42,13 @@ exports.read = (req, res) => {
 
     const slug = req.params.slug.toLowerCase();
 
-    Tag.findOne({slug}).exec((err, tag) => {
+    Tag.findOne({slug}).exec((err, tags) => {
         if(err) {
             return res.status(400).json({
                 error: errorHandler(err)
             });
         }
-        res.json(tag);
+        res.json(tags);
     });
 
 };
