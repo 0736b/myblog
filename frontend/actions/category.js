@@ -2,11 +2,12 @@ import fetch from "isomorphic-fetch";
 import { API } from "../config";
 
 export const create = (category, token) => {
-    return fetch(`${API}/category`, {
+    
+  return fetch(`${API}/category`, {
       method: "POST",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': "application/json",
         Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(category),
@@ -15,4 +16,5 @@ export const create = (category, token) => {
         return response.json();
       })
       .catch((err) => console.log(err));
+      
   };
