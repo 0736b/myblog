@@ -37,7 +37,7 @@ const Header = () => {
 
   return (
     <div>
-      <Navbar color="dark" container="md" dark expand="md">
+      <Navbar color="black" container="md" dark expand="md">
         <Link href="/">
           <NavbarBrand className="fw-bolder">{APP_NAME}</NavbarBrand>
         </Link>
