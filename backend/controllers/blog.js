@@ -7,7 +7,7 @@ const stripHtml = require("string-strip-html"); // npm i string-strip-html@4.4.1
 const _ = require("lodash");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const fs = require("fs");
-const {smartTrim} = require('../helpers/blog');
+const { smartTrim } = require("../helpers/blog");
 
 exports.create = (req, res) => {
   let form = new formidable.IncomingForm();
@@ -49,7 +49,7 @@ exports.create = (req, res) => {
     let blog = new Blog();
     blog.title = title;
     blog.body = body;
-    blog.excerpt = smartTrim(body, 320, ' ', '...');
+    blog.excerpt = smartTrim(body, 320, " ", "...");
     blog.slug = slugify(title).toLowerCase();
     blog.mtitle = `${title} | ${process.env.APP_NAME}`;
     blog.mdesc = stripHtml(body.substring(0, 160));
@@ -104,3 +104,108 @@ exports.create = (req, res) => {
     });
   });
 };
+
+// list
+exports.list = (req, res) => {
+  Blog.find({})
+    .populate("categories", "_id name slug")
+    .populate("tags", "_id name slug")
+    .populate("postedBy", "_id name username")
+    .select(
+      "_id title slug excerpt categories tags postedBy createdAt updatedAt"
+    )
+    .exec((err, data) => {
+      if (err) {
+        return res.json({
+          error: errorHandler(err),
+        });
+      }
+      res.json(data);
+    });
+};
+
+// listAllBlogsCategoriesTags
+exports.listAllBlogsCategoriesTags = (req, res) => {
+  let limit = req.body.limit ? parseInt(req.body.limit) : 10;
+  let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+
+  let blogs;
+  let categories;
+  let tags;
+
+  Blog.find({})
+    .populate("categories", "_id name slug")
+    .populate("tags", "_id name slug")
+    .populate("postedBy", "_id name username")
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit)
+    .select(
+      "_id title slug excerpt categories tags postedBy createdAt updatedAt"
+    )
+    .exec((err, data) => {
+      if (err) {
+        return res.json({
+          error: errorHandler(err),
+        });
+      }
+      blogs = data; // all blogs
+      // get all categories
+      Category.find({}).exec((err, c) => {
+        if (err) {
+          return res.json({
+            error: errorHandler(err),
+          });
+        }
+        categories = c; // all categories
+        Tag.find({}).exec((err, t) => {
+          if (err) {
+            return res.json({
+              error: errorHandler(err),
+            });
+          }
+          tags = t; // all tags
+          // return all blogs categories tags
+          res.json({ blogs, categories, tags, size: blogs.length });
+        });
+      });
+    });
+};
+
+// read
+exports.read = (req, res) => {
+  const slug = req.params.slug.toLowerCase();
+  Blog.findOne({ slug })
+    .populate("categories", "_id name slug")
+    .populate("tags", "_id name slug")
+    .populate("postedBy", "_id name username")
+    .select(
+      "_id title slug mtitle mdesc categories tags postedBy createdAt updatedAt"
+    )
+    .exec((err, data) => {
+      if (err) {
+        return res.json({
+          error: errorHandler(err),
+        });
+      }
+      res.json(data);
+    });
+};
+
+// remove
+exports.remove = (req, res) => {
+  const slug = req.params.slug.toLowerCase();
+  Blog.findOneAndRemove({ slug }).exec((err, data) => {
+    if (err) {
+      return res.json({
+        error: errorHandler(err),
+      });
+    }
+    res.json({
+      message: "Blog deleted successfully",
+    });
+  });
+};
+
+// update
+exports.update = (req, res) => {};
