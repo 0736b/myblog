@@ -36,7 +36,7 @@ const Header = () => {
   };
 
   return (
-    <div>
+    <div className="container-fluid">
       <Navbar color="black" container="md" dark expand="md">
         <Link href="/">
           <NavbarBrand className="fw-bolder">{APP_NAME}</NavbarBrand>

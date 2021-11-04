@@ -17,7 +17,7 @@ class MyDocument extends Document {
           /> */}
           <link rel="stylesheet" href="/static/css/styles.css" />
         </Head>
-        <body>
+        <body className="bg-dark">
           <Main />
           <NextScript />
         </body>
