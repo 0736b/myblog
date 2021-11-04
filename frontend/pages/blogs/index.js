@@ -11,7 +11,12 @@ const Blogs = ({ blogs, categories, tags, size, router }) => {
   
   // Doing SEO thing
   const head = () => {
-    <Head>
+    return(
+      <Head>
+              <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
       <title>Programming blogs | {APP_NAME}</title>
       <meta
         name="description"
@@ -33,8 +38,9 @@ const Blogs = ({ blogs, categories, tags, size, router }) => {
       <meta property="og:image" content="/static/images/0736b.jpg"/>
       <meta property="og:image:secure_url" content="/static/images/0736b.jpg"/>
       <meta property="og:image:type" content="image/jpg"/>
-      <meta property="fb:app_id" content={`${FB_APP_ID}`}/>
-    </Head>;
+      {/* <meta property="fb:app_id" content={`${FB_APP_ID}`}/> */}
+    </Head>
+    )
   };
 
   const showAllBlogs = () => {
