@@ -44,6 +44,22 @@ const Header = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav navbar>
+
+              <>
+                <NavItem>
+                  <Link href="/blogs">
+                    <NavLink
+                      style={{ cursor: "pointer" }}
+                      className="fw-lighter"
+                    >
+                      Blogs
+                    </NavLink>
+                  </Link>
+                </NavItem>
+              </>
+
+
+
             {!isAuth() && (
               <>
                 <NavItem>
