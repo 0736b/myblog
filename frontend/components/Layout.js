@@ -4,7 +4,7 @@ import Header from './Header'
 const Layout = ({children}) => {
     return (
         <>
-            <div className="container-md bg-white">
+            <div className="container-md bg-white border border-primary border-top-0">
             <Header/>
             <div className="container-sm">
             {children}
