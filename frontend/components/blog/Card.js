@@ -8,7 +8,7 @@ const Card = ({ blog }) => {
     const showBlogCategories = blog => 
         blog.categories.map((c, i) => (
             <Link key={i} href={`/categories/${c.slug}`}>
-                <a className="btn btn-dark mr-1 ml-1 mt-3">{c.name}</a>
+                <a className="btn btn-dark mx-1 mt-3">{c.name}</a>
             </Link>
         ));
     
@@ -16,7 +16,7 @@ const Card = ({ blog }) => {
     const showBlogTags = blog => 
         blog.tags.map((t, i) => (
             <Link key={i} href={`/tags/${t.slug}`}>
-                <a className="btn btn-outline-dark mr-1 ml-1 mt-3">{t.name}</a>
+                <a className="btn btn-outline-dark mx-1 mt-3">{t.name}</a>
             </Link>
         ));
     
@@ -31,7 +31,7 @@ const Card = ({ blog }) => {
         </Link>
       </header>
       <section>
-        <p className="mark ml-1 pt-2 pb-2">
+        <p className="mark mx-1 pt-2 pb-2">
           Written by {blog.postedBy.name} | Published{" "}
           {moment(blog.updatedAt).fromNow()}
         </p>
