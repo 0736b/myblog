@@ -12,3 +12,7 @@
     max-height: 500px;
     object-fit: cover;
 }
+
+.mark {
+    background-color:#D5F3FE !important;
+}
