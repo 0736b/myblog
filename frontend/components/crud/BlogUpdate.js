@@ -7,10 +7,10 @@ import { getCookie, isAuth } from "../../actions/auth";
 import { getCategories } from "../../actions/category";
 import { getTags } from "../../actions/tag";
 import { singleBlog, updateBlog } from "../../actions/blog";
-
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-import "react-quill/dist/quill.snow.css";
+import "../../node_modules/react-quill/dist/quill.snow.css";
 import { QuillModules, QuillFormats } from "../../helpers/quill";
+import { API } from "../../config";
 
 const BlogUpdate = ({ router }) => {
   const [body, setBody] = useState("");
@@ -18,8 +18,8 @@ const BlogUpdate = ({ router }) => {
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
 
-  const [checked, setChecked] = useState([]); // for categories
-  const [checkedTag, setCheckedTag] = useState([]); // for tags
+  const [checked, setChecked] = useState([]); // categories
+  const [checkedTag, setCheckedTag] = useState([]); // tags
 
   const [values, setValues] = useState({
     title: "",
@@ -107,7 +107,7 @@ const BlogUpdate = ({ router }) => {
     formData.set("categories", all);
   };
 
-  const handleToggleTag = (t) => () => {
+  const handleTagsToggle = (t) => () => {
     setValues({ ...values, error: "" });
     // return the first index or -1
     const clickedTag = checkedTag.indexOf(t);
@@ -124,7 +124,7 @@ const BlogUpdate = ({ router }) => {
   };
 
   const findOutCategory = (c) => {
-    const result = checked.indexOf(c); // -1
+    const result = checked.indexOf(c);
     if (result !== -1) {
       return true;
     } else {
@@ -133,7 +133,7 @@ const BlogUpdate = ({ router }) => {
   };
 
   const findOutTag = (t) => {
-    const result = checkedTag.indexOf(t); // -1
+    const result = checkedTag.indexOf(t);
     if (result !== -1) {
       return true;
     } else {
@@ -164,7 +164,7 @@ const BlogUpdate = ({ router }) => {
       tags.map((t, i) => (
         <li key={i} className="list-unstyled">
           <input
-            onChange={handleToggleTag(t._id)}
+            onChange={handleTagsToggle(t._id)}
             checked={findOutTag(t._id)}
             type="checkbox"
             className="mr-2"
@@ -182,8 +182,7 @@ const BlogUpdate = ({ router }) => {
     setValues({ ...values, [name]: value, formData, error: "" });
   };
 
-  // IDK but add => () after parameter 'e' is fix formData.set is not function error!
-  const handleBody = (e) => () => {
+  const handleBody = (e) => {
     setBody(e);
     formData.set("body", e);
   };
@@ -200,13 +199,14 @@ const BlogUpdate = ({ router }) => {
           success: `Blog titled "${data.title}" is successfully updated`,
         });
         if (isAuth() && isAuth().role === 1) {
-          Router.replace(`/admin/crud/${router.query.slug}`);
+          // Router.replace(`/admin/crud/${router.query.slug}`);
+          Router.replace(`/admin`);
         } else if (isAuth() && isAuth().role === 0) {
-          Router.replace(`/user/crud/${router.query.slug}`);
+          // Router.replace(`/user/crud/${router.query.slug}`);
+          Router.replace(`/user`);
         }
       }
     });
-    // console.log("update blog");
   };
 
   const showError = () => (
@@ -239,17 +239,19 @@ const BlogUpdate = ({ router }) => {
             onChange={handleChange("title")}
           />
         </div>
-        <div className="form-group mt-2">
+
+        <div className="form-group">
           <ReactQuill
             modules={QuillModules}
             formats={QuillFormats}
             value={body}
-            placeholder="Write something..."
+            placeholder="Write something amazing..."
             onChange={handleBody}
           />
         </div>
+
         <div>
-          <button type="submit" className="btn btn-dark mt-4">
+          <button type="submit" className="btn btn-dark">
             Update
           </button>
         </div>
@@ -262,25 +264,36 @@ const BlogUpdate = ({ router }) => {
       <div className="row">
         <div className="col-md-8">
           {updateBlogForm()}
+
           <div className="pt-3">
-          {showSuccess()}
-          {showError()}
+            {showSuccess()}
+            {showError()}
           </div>
+
+          {body && (
+            <img
+              src={`${API}/blog/photo/${router.query.slug}`}
+              alt={title}
+              style={{ width: "100%" }}
+            />
+          )}
         </div>
+
         <div className="col-md-4">
           <div>
             <div className="form-group pb-2">
               <h5>Featured image</h5>
               <hr />
+
               <small className="text-muted">Max size: 1mb</small>
               <br />
               <label className="btn btn-outline-dark">
                 Upload featured image
                 <input
-                  hidden
                   onChange={handleChange("photo")}
                   type="file"
                   accept="image/*"
+                  hidden
                 />
               </label>
             </div>
@@ -288,6 +301,7 @@ const BlogUpdate = ({ router }) => {
           <div>
             <h5>Categories</h5>
             <hr />
+
             <ul style={{ maxHeight: "200px", overflowY: "scroll" }}>
               {showCategories()}
             </ul>
