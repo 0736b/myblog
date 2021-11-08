@@ -6,6 +6,7 @@ import { useState } from "react";
 import { listBlogsWithCategoriesAndTags } from "../../actions/blog";
 import Card from "../../components/blog/Card";
 import { API, DOMAIN, APP_NAME, FB_APP_ID } from "../../config";
+import Search from '../../components/blog/Search';
 
 const Blogs = ({
   blogs,
@@ -124,6 +125,7 @@ const Blogs = ({
         <main>
           <div className="container-fluid">
             <header>
+            <Search/>
               <div className="col-md-12 pt-3">
                 <h1 className="display-4 fw-bold text-center">
                   0736b's blogs

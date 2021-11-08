@@ -21,6 +21,7 @@ import {
 } from "reactstrap";
 
 import '.././node_modules/nprogress/nprogress.css';
+// import Search from './blog/Search';
 
 // NProgress
 Router.onRouteChangeStart = url => NProgress.start();
@@ -35,7 +36,8 @@ const Header = () => {
   };
 
   return (
-    <div className="container-fluid">
+    // <div className="container-fluid">
+    <>
       <Navbar color="black" container="md" dark expand="md">
         <Link href="/">
           <NavbarBrand className="fw-bolder">{APP_NAME}</NavbarBrand>
@@ -137,7 +139,9 @@ const Header = () => {
           </Nav>
         </Collapse>
       </Navbar>
-    </div>
+      {/* <Search/> */}
+    {/* </div> */}
+    </>
   );
 };
 
