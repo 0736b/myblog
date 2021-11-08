@@ -2,6 +2,7 @@ const Tag = require('../models/tag');
 const slugify = require('slugify');
 // slugify is doing space to dash like | new arrival to new-arrival
 const { errorHandler} = require('../helpers/dbErrorHandler');
+const Blog = require('../models/blog');
 
 
 exports.create = (req, res) => {
@@ -48,7 +49,19 @@ exports.read = (req, res) => {
                 error: errorHandler(err)
             });
         }
-        res.json(tags);
+        Blog.find({ tags: tags })
+            .populate('categories', '_id name slug')
+            .populate('tags', '_id name slug')
+            .populate('postedBy', '_id name')
+            .select('_id title slug excerpt categories postedBy tags createdAt updatedAt')
+            .exec((err, data) => {
+                if (err) {
+                    return res.status(400).json({
+                        error: errorHandler(err)
+                    });
+                }
+                res.json({ tag: tags, blogs: data });
+            });
     });
 
 };

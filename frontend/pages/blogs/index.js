@@ -42,7 +42,7 @@ const Blogs = ({
         <meta property="og:image" content="/static/images/0736b.jpg" />
         <meta
           property="og:image:secure_url"
-          content="/static/images/0736b.jpg"
+          content={`${DOMAIN}/static/images/0736b.jpg`}
         />
         <meta property="og:image:type" content="image/jpg" />
         {/* <meta property="fb:app_id" content={`${FB_APP_ID}`}/> */}
@@ -126,7 +126,7 @@ const Blogs = ({
             <header>
               <div className="col-md-12 pt-3">
                 <h1 className="display-4 fw-bold text-center">
-                  Programming blogs and tutorial
+                  0736b's blogs
                 </h1>
               </div>
               <section>
