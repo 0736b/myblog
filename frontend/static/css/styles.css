@@ -16,3 +16,7 @@
 .mark {
     background-color:#D5F3FE !important;
 }
+
+* {
+    border-radius: 0 !important;
+  }

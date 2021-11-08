@@ -25,13 +25,13 @@ const Card = ({ blog }) => {
     <div className="lead pb-4">
       <header>
         <Link href={`/blogs/${blog.slug}`}>
-          <a>
+          <a className="text-decoration-none">
             <h2 className="pt-3 pb-3 fw-bold">{blog.title}</h2>
           </a>
         </Link>
       </header>
       <section>
-        <p className="mark mx-1 pt-2 pb-2">
+        <p className="mark mx-1">
           Written by {blog.postedBy.name} | Published{" "}
           {moment(blog.updatedAt).fromNow()}
         </p>
