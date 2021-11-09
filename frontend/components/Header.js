@@ -20,13 +20,13 @@ import {
   DropdownMenu,
 } from "reactstrap";
 
-import '.././node_modules/nprogress/nprogress.css';
+import ".././node_modules/nprogress/nprogress.css";
 // import Search from './blog/Search';
 
 // NProgress
-Router.onRouteChangeStart = url => NProgress.start();
-Router.onRouteChangeComplete = url => NProgress.done();
-Router.onRouteChangeError = url => NProgress.done();
+Router.onRouteChangeStart = (url) => NProgress.start();
+Router.onRouteChangeComplete = (url) => NProgress.done();
+Router.onRouteChangeError = (url) => NProgress.done();
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,21 +45,15 @@ const Header = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav navbar>
-
-              <>
-                <NavItem>
-                  <Link href="/blogs">
-                    <NavLink
-                      style={{ cursor: "pointer" }}
-                      className="fw-lighter"
-                    >
-                      Blogs
-                    </NavLink>
-                  </Link>
-                </NavItem>
-              </>
-
-
+            <>
+              <NavItem>
+                <Link href="/blogs">
+                  <NavLink style={{ cursor: "pointer" }} className="fw-lighter">
+                    Blogs
+                  </NavLink>
+                </Link>
+              </NavItem>
+            </>
 
             {!isAuth() && (
               <>
@@ -135,12 +129,20 @@ const Header = () => {
                 </NavLink>
               </NavItem>
             )}
-            
+
+            <NavItem>
+              <Link href="/user/crud/create">
+                <NavLink style={{ cursor: "pointer" }} className="fw-lighter btn btn-primary">
+                  Write a blog
+                </NavLink>
+              </Link>
+            </NavItem>
+
           </Nav>
         </Collapse>
       </Navbar>
       {/* <Search/> */}
-    {/* </div> */}
+      {/* </div> */}
     </>
   );
 };
