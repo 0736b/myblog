@@ -106,7 +106,8 @@ const SingleBlog = ({ blog, query }) => {
                     {blog.title}
                   </h1>
                   <p className="lead mt-3 mark">
-                    Written by {blog.postedBy.name} | Published{" "}
+                    Written by <Link href ={`/profile/${blog.postedBy.username}`}>
+                      <a>{blog.postedBy.username}</a></Link> | Published{" "}
                     {moment(blog.updatedAt).fromNow()}
                   </p>
                   <div className="pb-3">

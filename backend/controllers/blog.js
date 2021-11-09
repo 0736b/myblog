@@ -136,7 +136,7 @@ exports.listAllBlogsCategoriesTags = (req, res) => {
   Blog.find({})
     .populate("categories", "_id name slug")
     .populate("tags", "_id name slug")
-    .populate("postedBy", "_id name username")
+    .populate("postedBy", "_id name username profile")
     .sort({ createdAt: -1 })
     .skip(skip)
     .limit(limit)
@@ -293,7 +293,7 @@ exports.listRelated = (req, res) => {
   //$ne means not including $in means including
   Blog.find({ _id: { $ne: _id }, categories: { $in: categories } })
     .limit(limit)
-    .populate("postedBy", "_id name profile")
+    .populate("postedBy", "_id name username profile")
     .select("title slug excerpt postedBy createdAt updatedAt")
     .exec((err, blogs) => {
       if (err) {
