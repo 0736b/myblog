@@ -6,18 +6,17 @@ import { singleBlog, listRelated } from "../../actions/blog";
 import { API, DOMAIN, APP_NAME, FB_APP_ID } from "../../config";
 import renderHTML from "react-render-html";
 import moment from "moment";
-import SmallCard from '../../components/blog/SmallCard';
+import SmallCard from "../../components/blog/SmallCard";
+import DisqusThread from "../../components/DisqusThread";
 
 const SingleBlog = ({ blog, query }) => {
-
   const [related, setRelated] = useState([]);
-  
+
   const loadRelated = () => {
-    listRelated({blog}).then(data => {
-      if(data.error){
-        console.log(data.error)
-      }
-      else {
+    listRelated({ blog }).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
         setRelated(data);
       }
     });
@@ -25,26 +24,19 @@ const SingleBlog = ({ blog, query }) => {
 
   useEffect(() => {
     loadRelated();
-  }, [])
+  }, []);
 
   const head = () => {
     return (
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{blog.title} | {APP_NAME}</title>
-        <meta
-          name="description"
-          content={blog.mdesc}
-        />
+        <title>
+          {blog.title} | {APP_NAME}
+        </title>
+        <meta name="description" content={blog.mdesc} />
         <link rel="canonical" href={`${DOMAIN}/blogs/${query.slug}`} />
-        <meta
-          property="og:title"
-          content={`${blog.title} | ${APP_NAME}`}
-        />
-        <meta
-          property="og:description"
-          content={blog.mdesc}
-        />
+        <meta property="og:title" content={`${blog.title} | ${APP_NAME}`} />
+        <meta property="og:description" content={blog.mdesc} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`${DOMAIN}/blogs/${query.slug}`} />
         <meta property="og:site_name" content={`${APP_NAME}`} />
@@ -78,15 +70,27 @@ const SingleBlog = ({ blog, query }) => {
     return related.map((blog, i) => (
       <div key={i} className="col-md-4">
         <article>
-          <SmallCard blog={blog}/>
+          <SmallCard blog={blog} />
         </article>
       </div>
-    ))
-  }
+    ));
+  };
+
+  const showComments = () => {
+    return (
+      <div>
+        <DisqusThread
+          id={blog.id}
+          title={blog.title}
+          path={`/blog/${blog.slug}`}
+        />
+      </div>
+    );
+  };
 
   return (
     <>
-    {head()}
+      {head()}
       <Layout>
         <main>
           <article>
@@ -106,9 +110,11 @@ const SingleBlog = ({ blog, query }) => {
                     {blog.title}
                   </h1>
                   <p className="lead mt-3 mark">
-                    Written by <Link href ={`/profile/${blog.postedBy.username}`}>
-                      <a>{blog.postedBy.username}</a></Link> | Published{" "}
-                    {moment(blog.updatedAt).fromNow()}
+                    Written by{" "}
+                    <Link href={`/profile/${blog.postedBy.username}`}>
+                      <a>{blog.postedBy.username}</a>
+                    </Link>{" "}
+                    | Published {moment(blog.updatedAt).fromNow()}
                   </p>
                   <div className="pb-3">
                     {showBlogCategories(blog)}
@@ -131,11 +137,11 @@ const SingleBlog = ({ blog, query }) => {
             </div>
             <div className="container">
               <h4 className="text-center pt-5 pb-5 h2">Related blogs</h4>
-              <hr/>
+              <hr />
               <div className="row">{showRelatedBlog()}</div>
             </div>
             <div className="container pb-5">
-              <p>show comments</p>
+              {showComments()}
             </div>
           </article>
         </main>

@@ -131,7 +131,7 @@ const Header = () => {
             )}
 
             <NavItem>
-              <Link href="/user/crud/create">
+              <Link href="/user/crud/blog">
                 <NavLink style={{ cursor: "pointer" }} className="fw-lighter btn btn-primary">
                   Write a blog
                 </NavLink>
