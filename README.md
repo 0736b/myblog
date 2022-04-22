@@ -1,2 +1,2 @@
 # myblog
-Full-Stack
+M.E.R.N Full-Stack
